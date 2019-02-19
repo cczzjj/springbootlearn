@@ -48,6 +48,7 @@ public class UserController extends BaseController {
         return this.result(ErrorCode.SUCCESS, userService.findByUsername(username));
     }
 
+    @LoginRequired
     @GetMapping("/find/{id}")
     public ApiResult findById(@PathVariable("id") Integer id) {
         return this.result(ErrorCode.SUCCESS, userService.findById(id));
