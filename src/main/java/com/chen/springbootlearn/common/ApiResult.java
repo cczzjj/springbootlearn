@@ -20,8 +20,19 @@ public class ApiResult {
         this.data = data;
     }
 
+    public ApiResult(ErrorCode errorCode, String msg) {
+        this.code = errorCode.getCode();
+        this.msg = msg;
+    }
+
     public ApiResult(ErrorCode errorCode, String msg, Object data) {
         this.code = errorCode.getCode();
+        this.msg = msg;
+        this.data = data;
+    }
+
+    public ApiResult(Integer code, String msg, Object data) {
+        this.code = code;
         this.msg = msg;
         this.data = data;
     }
