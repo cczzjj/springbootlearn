@@ -16,7 +16,7 @@ public class TokenUtils {
     /**
      * 签名秘钥
      */
-    public static final String SECRET = "admin";
+    private static final String SECRET = "admin";
 
     /**
      * 生成token

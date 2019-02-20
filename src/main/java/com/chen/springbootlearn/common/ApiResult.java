@@ -17,7 +17,12 @@ public class ApiResult {
 
     public ApiResult(ErrorCode errorCode, Object data) {
         this.code = errorCode.getCode();
-        this.msg = errorCode.getMsg();
+        this.data = data;
+    }
+
+    public ApiResult(ErrorCode errorCode, String msg, Object data) {
+        this.code = errorCode.getCode();
+        this.msg = msg;
         this.data = data;
     }
 

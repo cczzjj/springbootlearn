@@ -2,8 +2,9 @@ package com.chen.springbootlearn.interceptor;
 
 import com.chen.springbootlearn.annotation.LoginRequired;
 import com.chen.springbootlearn.common.CurrentUserConstants;
+import com.chen.springbootlearn.common.ErrorCode;
 import com.chen.springbootlearn.domain.User;
-import com.chen.springbootlearn.exception.CommonException;
+import com.chen.springbootlearn.exception.CustomAuthException;
 import com.chen.springbootlearn.service.UserService;
 import com.chen.springbootlearn.util.TokenUtils;
 import io.jsonwebtoken.Claims;
@@ -19,14 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
-    public final static String ACCESS_TOKEN = "accessToken";
     @Autowired
     UserService userService;
 
     // 在业务处理器处理请求之前被调用
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(123);
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
@@ -42,7 +41,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             String accessToken = request.getHeader("Authorization");
 
             if (null == accessToken) {
-                throw new CommonException(401, "无token，请重新登录");
+                throw new CustomAuthException(ErrorCode.TOKEN_REQUIRED);
             } else {
                 // 从Redis 中查看 token 是否过期
                 Claims claims;
@@ -50,17 +49,17 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     claims = TokenUtils.parseJWT(accessToken);
                 } catch (ExpiredJwtException e) {
                     response.setStatus(401);
-                    throw new CommonException(401, "token失效，请重新登录");
+                    throw new CustomAuthException(ErrorCode.TOKEN_INVALID);
                 } catch (SignatureException se) {
                     response.setStatus(401);
-                    throw new CommonException(401, "token令牌错误");
+                    throw new CustomAuthException(ErrorCode.TOKEN_ERROR);
                 }
 
                 String username = claims.getId();
                 User user = userService.findByUsername(username);
                 if (user == null) {
                     response.setStatus(401);
-                    throw new CommonException(401, "用户不存在，请重新登录");
+                    throw new CustomAuthException(ErrorCode.USER_UNEXIST);
                 }
                 // 当前登录用户@CurrentUser
                 request.setAttribute(CurrentUserConstants.CURRENT_USER, user);

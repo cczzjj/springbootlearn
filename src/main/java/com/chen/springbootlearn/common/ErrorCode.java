@@ -1,28 +1,39 @@
 package com.chen.springbootlearn.common;
 
 public enum ErrorCode {
-    SUCCESS(200, "成功"),
-    NO_PERMISSION(211, "权限不足"),
-    SERVER_ERROR(10000, "服务器异常"),
-    AUTH_ERROR(10001, "认证失败"),
-    PARAMS_ERROR(10002, "参数错误"),
-    JSON_PARSE_ERROR(10003, "Json解析错误"),
-    ILLEAGAL_STRING(15001, "非法字符串"),
-    UNKNOW_ERROR(16000, "未知错误");
+
+    SUCCESS(0, "success"),
+
+    /**
+     * token验证相关
+     */
+    TOKEN_REQUIRED(10001, ""),
+    TOKEN_INVALID(10002, "token失效"),
+    TOKEN_ERROR(10003, "token错误"),
+
+    /**
+     * 用户相关
+     */
+    USER_UNEXIST(11001, "用户不存在"),
+
+    /**
+     * 未知错误
+     */
+    UNKNOW_ERROR(99999, "未知错误");
 
     private int code;
-    private String msg;
+    private String msgKey;
 
-    ErrorCode(int code, String msg) {
+    ErrorCode(int code, String msgKey) {
         this.code = code;
-        this.msg = msg;
+        this.msgKey = msgKey;
     }
 
     public int getCode() {
         return code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMsgKey() {
+        return msgKey;
     }
 }
