@@ -1,5 +1,8 @@
 package com.chen.springbootlearn.common;
 
+import lombok.Getter;
+
+@Getter
 public class ApiResult {
     /**
      * 错误码，对应{@link ErrorCode}，表示一种错误类型
@@ -15,14 +18,18 @@ public class ApiResult {
      */
     private Object data;
 
-    public ApiResult(ErrorCode errorCode, Object data) {
+    public ApiResult(ErrorCode errorCode) {
         this.code = errorCode.getCode();
-        this.data = data;
     }
 
     public ApiResult(ErrorCode errorCode, String msg) {
         this.code = errorCode.getCode();
         this.msg = msg;
+    }
+
+    public ApiResult(ErrorCode errorCode, Object data) {
+        this.code = errorCode.getCode();
+        this.data = data;
     }
 
     public ApiResult(ErrorCode errorCode, String msg, Object data) {
@@ -31,21 +38,14 @@ public class ApiResult {
         this.data = data;
     }
 
+    public ApiResult(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public ApiResult(Integer code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public Object getData() {
-        return data;
     }
 }

@@ -11,8 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
-@EnableWebMvc
-@Configuration
+//@EnableWebMvc
+//@Configuration
 public class AuthConfig implements WebMvcConfigurer {
 
     @Override

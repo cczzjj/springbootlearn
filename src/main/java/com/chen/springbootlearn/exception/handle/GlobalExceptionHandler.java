@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private final LocaleMessage localeMessage;
+
     @Autowired
-    private LocaleMessage localeMessage;
+    public GlobalExceptionHandler(LocaleMessage localeMessage) {
+        this.localeMessage = localeMessage;
+    }
 
     @ExceptionHandler(CustomAuthException.class)
     @ResponseBody

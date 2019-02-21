@@ -1,9 +1,9 @@
 package com.chen.springbootlearn.interceptor;
 
 import com.chen.springbootlearn.annotation.LoginRequired;
-import com.chen.springbootlearn.common.CurrentUserConstants;
+import com.chen.springbootlearn.constant.CurrentUserConstant;
 import com.chen.springbootlearn.common.ErrorCode;
-import com.chen.springbootlearn.domain.User;
+import com.chen.springbootlearn.domain.SysUser;
 import com.chen.springbootlearn.exception.CustomAuthException;
 import com.chen.springbootlearn.service.UserService;
 import com.chen.springbootlearn.util.TokenUtils;
@@ -55,14 +55,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     throw new CustomAuthException(ErrorCode.TOKEN_ERROR);
                 }
 
-                String username = claims.getId();
-                User user = userService.findByUsername(username);
-                if (user == null) {
-                    response.setStatus(401);
-                    throw new CustomAuthException(ErrorCode.USER_UNEXIST);
-                }
-                // 当前登录用户@CurrentUser
-                request.setAttribute(CurrentUserConstants.CURRENT_USER, user);
+//                String username = claims.getId();
+//                SysUser user = userService.findByUsername(username);
+//                if (user == null) {
+//                    response.setStatus(401);
+//                    throw new CustomAuthException(ErrorCode.USER_UNEXIST);
+//                }
+//                // 当前登录用户@CurrentUser
+//                request.setAttribute(CurrentUserConstant.CURRENT_USER, user);
                 return true;
             }
         } else { // 不需要登录可请求
