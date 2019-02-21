@@ -3,9 +3,7 @@ package com.chen.springbootlearn.config;
 import com.chen.springbootlearn.security.MyAuthenticationEntryPoint;
 import com.chen.springbootlearn.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,8 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
-@Order(SecurityProperties.BASIC_AUTH_ORDER)
-@EnableGlobalMethodSecurity(prePostEnabled = true) // 启用方法级别的权限验证
+@EnableGlobalMethodSecurity(prePostEnabled = true, order = 1) // 启用方法级别的权限验证
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MyUserDetailsService myUserDetailsService;
