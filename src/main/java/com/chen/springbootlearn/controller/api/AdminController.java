@@ -1,7 +1,8 @@
-package com.chen.springbootlearn.controller;
+package com.chen.springbootlearn.controller.api;
 
 import com.chen.springbootlearn.common.ApiResult;
 import com.chen.springbootlearn.common.ErrorCode;
+import com.chen.springbootlearn.controller.BaseController;
 import com.chen.springbootlearn.mapper.UserMapper;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,7 @@ public class AdminController extends BaseController {
     @RequiresRoles("admin")
     public ApiResult getUser() {
         List<String> list = userMapper.getUser();
-        return apiResult.result(ErrorCode.USER_UNEXIST);
-//        return apiResult.success(list);
+        return apiResult.success(list);
     }
 
     /**
@@ -37,7 +37,6 @@ public class AdminController extends BaseController {
     @RequiresRoles("admin")
     public ApiResult banUser(String username) {
         userMapper.banUser(username);
-        return apiResult.success();
-//        return resultMap.success().code(200).message("成功封号！");
+        return apiResult.success(ErrorCode.BAN_SUCCESS);
     }
 }

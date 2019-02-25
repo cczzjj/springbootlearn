@@ -1,6 +1,8 @@
-package com.chen.springbootlearn.controller;
+package com.chen.springbootlearn.controller.api;
 
-import com.chen.springbootlearn.common.ResultMap;
+import com.chen.springbootlearn.common.ApiResult;
+import com.chen.springbootlearn.common.ErrorCode;
+import com.chen.springbootlearn.controller.BaseController;
 import com.chen.springbootlearn.mapper.UserMapper;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,14 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
     private final UserMapper userMapper;
-    private final ResultMap resultMap;
 
     @Autowired
-    public UserController(UserMapper userMapper, ResultMap resultMap) {
+    public UserController(UserMapper userMapper) {
         this.userMapper = userMapper;
-        this.resultMap = resultMap;
     }
 
     /**
@@ -28,20 +28,20 @@ public class UserController {
      */
     @GetMapping("/getMessage")
     @RequiresRoles(logical = Logical.OR, value = {"user", "admin"})
-    public ResultMap getMessage() {
-        return resultMap.success().code(200).message("成功获得信息！");
+    public ApiResult getMessage() {
+        return apiResult.success();
     }
 
     @PostMapping("/updatePassword")
     @RequiresRoles(logical = Logical.OR, value = {"user", "admin"})
-    public ResultMap updatePassword(String username, String oldPassword, String newPassword) {
+    public ApiResult updatePassword(String username, String oldPassword, String newPassword) {
         String dataBasePassword = userMapper.getPassword(username);
         if (dataBasePassword.equals(oldPassword)) {
             userMapper.updatePassword(username, newPassword);
         } else {
-            return resultMap.fail().message("密码错误！");
+            return apiResult.result(ErrorCode.USER_PASSWORD_ERROR);
         }
-        return resultMap.success().code(200).message("成功获得信息！");
+        return apiResult.success();
     }
 
     /**
@@ -50,7 +50,7 @@ public class UserController {
     @GetMapping("/getVipMessage")
     @RequiresRoles(logical = Logical.OR, value = {"user", "admin"})
     @RequiresPermissions("vip")
-    public ResultMap getVipMessage() {
-        return resultMap.success().code(200).message("成功获得 vip 信息！");
+    public ApiResult getVipMessage() {
+        return apiResult.success();
     }
 }

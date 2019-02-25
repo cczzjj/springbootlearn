@@ -16,15 +16,17 @@ public class ApiResult extends LinkedHashMap<String, Object> {
     }
 
     public ApiResult success() {
-        this.put("code", 0);
-        this.put("msg", "");
+        ErrorCode errorCode = ErrorCode.SUCCESS;
+        this.put("code", errorCode.getCode());
+        this.put("msg", localeMessage.getMessage(errorCode.getMsgKey()));
         this.put("data", null);
         return this;
     }
 
     public ApiResult success(Object data) {
-        this.put("code", 0);
-        this.put("msg", "");
+        ErrorCode errorCode = ErrorCode.SUCCESS;
+        this.put("code", errorCode.getCode());
+        this.put("msg", localeMessage.getMessage(errorCode.getMsgKey()));
         this.put("data", data);
         return this;
     }
