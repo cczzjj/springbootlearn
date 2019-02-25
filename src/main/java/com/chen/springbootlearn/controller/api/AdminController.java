@@ -4,6 +4,7 @@ import com.chen.springbootlearn.common.ApiResult;
 import com.chen.springbootlearn.common.ErrorCode;
 import com.chen.springbootlearn.controller.BaseController;
 import com.chen.springbootlearn.mapper.UserMapper;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,8 @@ public class AdminController extends BaseController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping("/getUser")
-    @RequiresRoles("admin")
+    @GetMapping("/get_user")
+    @RequiresPermissions("user.search")
     public ApiResult getUser() {
         List<String> list = userMapper.getUser();
         return apiResult.success(list);
@@ -33,8 +34,8 @@ public class AdminController extends BaseController {
     /**
      * 封号操作
      */
-    @PostMapping("/banUser")
-    @RequiresRoles("admin")
+    @PostMapping("/ban_user")
+    @RequiresPermissions("user.ban")
     public ApiResult banUser(String username) {
         userMapper.banUser(username);
         return apiResult.success(ErrorCode.BAN_SUCCESS);

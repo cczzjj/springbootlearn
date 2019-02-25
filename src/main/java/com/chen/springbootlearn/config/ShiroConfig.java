@@ -1,7 +1,7 @@
 package com.chen.springbootlearn.config;
 
 import com.chen.springbootlearn.filter.JWTFilter;
-import com.chen.springbootlearn.shiro.CustomRealm;
+import com.chen.springbootlearn.shiro.JWTRealm;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
@@ -47,10 +47,10 @@ public class ShiroConfig {
      * 注入 securityManager
      */
     @Bean
-    public SecurityManager securityManager(CustomRealm customRealm) {
+    public SecurityManager securityManager(JWTRealm JWTRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置自定义 realm.
-        securityManager.setRealm(customRealm);
+        securityManager.setRealm(JWTRealm);
 
         /*
          * 关闭shiro自带的session，详情见文档

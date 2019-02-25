@@ -1,4 +1,4 @@
 package com.chen.springbootlearn.service;
 
-public interface PermissionService {
+public class PermissionService {
 }

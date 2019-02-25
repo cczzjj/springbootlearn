@@ -1,4 +1,4 @@
 package com.chen.springbootlearn.domain;
 
-public class User {
+public class SysRole {
 }
