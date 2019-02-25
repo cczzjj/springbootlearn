@@ -19,10 +19,10 @@ public class GlobalExceptionHandler {
         this.localeMessage = localeMessage;
     }
 
-    @ExceptionHandler(CustomAuthException.class)
-    @ResponseBody
-    public ApiResult handleCustomAuthException(CustomAuthException exception) {
-        ErrorCode errorCode = exception.getErrorCode();
-        return new ApiResult(errorCode.getCode(), localeMessage.getMessage(errorCode.getMsgKey()), exception.getData());
-    }
+//    @ExceptionHandler(CustomAuthException.class)
+//    @ResponseBody
+//    public ApiResult handleCustomAuthException(CustomAuthException exception) {
+//        ErrorCode errorCode = exception.getErrorCode();
+//        return new ApiResult(errorCode.getCode(), localeMessage.getMessage(errorCode.getMsgKey()), exception.getData());
+//    }
 }
